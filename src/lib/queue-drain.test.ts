@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { enqueueClaim, enqueueMutation, loadAllQueued, updateQueued } from './queue'
 import { drainQueue } from './queue-drain'
 import type { ClaimRow } from './claim-payload'
@@ -19,11 +20,11 @@ beforeEach(async () => {
   await clear()
 })
 
-function mockClient(responder: (op: { table?: string; storage?: string; row?: any; blob?: Blob }) => { error: { code?: string; message?: string } | null }) {
+function mockClient(responder: (op: { table?: string; storage?: string; row?: unknown; blob?: Blob }) => { error: { code?: string; message?: string } | null }) {
   return {
     from(table: string) {
       return {
-        async insert(payload: any) {
+        async insert(payload: unknown) {
           return { error: responder({ table, row: payload }).error, data: null }
         },
       }
@@ -37,7 +38,7 @@ function mockClient(responder: (op: { table?: string; storage?: string; row?: an
         }
       },
     },
-  } as any
+  } as unknown as SupabaseClient
 }
 
 describe('drainQueue', () => {

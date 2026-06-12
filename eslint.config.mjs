@@ -10,6 +10,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Agent worktrees contain full copies of the app — never lint them.
+    ".claude/**",
   ]),
 ]);
 

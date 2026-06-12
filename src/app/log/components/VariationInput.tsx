@@ -34,8 +34,8 @@ export function VariationInput({ onSave, onCancel }: Props) {
         estimatedCostCents: cents,
         reason: reason.trim() || undefined,
       })
-    } catch (e: any) {
-      setError(e.message ?? 'Invalid input')
+    } catch (e) {
+      setError((e as Error).message ?? 'Invalid input')
       setSubmitting(false)
     }
   }

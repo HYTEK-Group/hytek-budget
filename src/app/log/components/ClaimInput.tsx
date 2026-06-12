@@ -50,8 +50,8 @@ export function ClaimInput({ item, onSave, onCancel }: Props) {
       }
       setSubmitting(true)
       await onSave(payload)
-    } catch (e: any) {
-      setError(e.message ?? 'Invalid input')
+    } catch (e) {
+      setError((e as Error).message ?? 'Invalid input')
       setSubmitting(false)
     }
   }

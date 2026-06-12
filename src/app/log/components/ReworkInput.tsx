@@ -60,8 +60,8 @@ export function ReworkInput({ onSave, onCancel }: Props) {
         },
         photo,
       )
-    } catch (e: any) {
-      setError(e.message ?? 'Invalid input')
+    } catch (e) {
+      setError((e as Error).message ?? 'Invalid input')
       setSubmitting(false)
     }
   }

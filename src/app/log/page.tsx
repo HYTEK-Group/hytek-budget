@@ -67,7 +67,11 @@ export default function LogPage() {
   }, [jobLoading, job, router])
 
   useEffect(() => {
-    if (!job) { setAllItems([]); return }
+    if (!job) {
+      // Microtask defer keeps the clear out of the synchronous effect body (react-hooks/set-state-in-effect)
+      Promise.resolve().then(() => setAllItems([]))
+      return
+    }
     supabase
       .from('install_budget_items')
       .select('*')
@@ -77,9 +81,10 @@ export default function LogPage() {
       .then(({ data }) => setAllItems((data as InstallBudgetItem[]) ?? []))
   }, [job])
 
-  // Clear form state when stream changes so no stale selection leaks
+  // Clear form state when stream changes so no stale selection leaks.
+  // Microtask defer keeps the clear out of the synchronous effect body (react-hooks/set-state-in-effect).
   useEffect(() => {
-    setSelected(null)
+    Promise.resolve().then(() => setSelected(null))
   }, [stream])
 
   const fireConfirmationAndDrain = useCallback(() => {

@@ -30,7 +30,7 @@ export function TodaysClaimsList({ claims }: Props) {
   if (claims.length === 0) return null
   return (
     <section className="space-y-2">
-      <h3 className="text-xs uppercase tracking-wide text-gray-500">Today's claims</h3>
+      <h3 className="text-xs uppercase tracking-wide text-gray-500">Today&apos;s claims</h3>
       <ul className="space-y-2">
         {claims.map((c) => (
           <li key={c.id} className="rounded-xl bg-white px-3 py-2 text-sm shadow">

@@ -2,6 +2,7 @@
 // Self-running premium showcase, 4-min loop
 // Brand: Black #0B0809 + HYTEK Yellow #FFCB05, Bahnschrift typography
 
+/* eslint-disable @typescript-eslint/no-require-imports -- plain CommonJS Node script run with `node build.js`; converting to ESM would change how it executes */
 const pptxgen = require("pptxgenjs");
 const sharp = require("sharp");
 

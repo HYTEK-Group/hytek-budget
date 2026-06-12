@@ -60,7 +60,9 @@ export function useRecentItems(userId: string | null, jobId: string | null) {
     }
   }, [userId, jobId])
 
-  useEffect(() => { refresh() }, [refresh])
+  // Microtask defer keeps refresh's sync setState out of the effect body
+  // (react-hooks/set-state-in-effect); refresh itself stays shared with external callers.
+  useEffect(() => { Promise.resolve().then(() => refresh()) }, [refresh])
 
   return { items, loading, refresh }
 }

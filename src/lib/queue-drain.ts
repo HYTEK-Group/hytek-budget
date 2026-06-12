@@ -47,7 +47,7 @@ async function executeMutation(
           upsert: false,
         })
       if (up.error) {
-        const msg = (up.error as any).message ?? ''
+        const msg = (up.error as { message?: string }).message ?? ''
         // 'already exists' / 'duplicate' => treat as success (already uploaded on prior attempt)
         if (!/exists|duplicate/i.test(msg)) {
           return { error: { message: `storage: ${msg}` } }
@@ -58,7 +58,7 @@ async function executeMutation(
       const ins = await supabase.from('job_rework').insert(record.payload)
       if (ins.error) {
         // Unique PK violation (23505) = rework already inserted on prior attempt — treat as success
-        if ((ins.error as any).code !== '23505') return { error: ins.error as any }
+        if ((ins.error as { code?: string }).code !== '23505') return { error: ins.error as { code?: string; message?: string } }
       }
 
       // Step 3: insert rework_photos row linking the two
@@ -70,16 +70,16 @@ async function executeMutation(
       const photoIns = await supabase.from('rework_photos').insert(photoRow)
       if (photoIns.error) {
         // 23505 = already inserted on prior attempt
-        if ((photoIns.error as any).code !== '23505') return { error: photoIns.error as any }
+        if ((photoIns.error as { code?: string }).code !== '23505') return { error: photoIns.error as { code?: string; message?: string } }
       }
       return { error: null }
     }
 
     // All other kinds: straight insert into record.table
     const res = await supabase.from(record.table).insert(record.payload)
-    return { error: (res.error as any) ?? null }
-  } catch (e: any) {
-    return { error: { message: e?.message ?? String(e) } }
+    return { error: (res.error as { code?: string; message?: string } | null) ?? null }
+  } catch (e) {
+    return { error: { message: (e as { message?: string } | null | undefined)?.message ?? String(e) } }
   }
 }
 

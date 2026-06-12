@@ -36,7 +36,7 @@ async function saveIndex(ids: string[]): Promise<void> {
 
 // Distributive Omit — applies Omit to each union member individually so
 // discriminants and kind-specific fields (e.g. `photo` on rework_with_photo) are preserved.
-type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never
 
 export async function enqueueMutation(record: DistributiveOmit<QueuedMutation, 'firstQueuedAt' | 'updatedAt' | 'status'>): Promise<void> {
   const now = Date.now()

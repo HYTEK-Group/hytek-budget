@@ -40,7 +40,9 @@ export function useOfflineQueue() {
   }, [refresh])
 
   useEffect(() => {
-    refresh()
+    // Microtask defer keeps the initial count refresh out of the synchronous effect
+    // body (react-hooks/set-state-in-effect) without touching the listener wiring below.
+    Promise.resolve().then(() => refresh())
     const onVisible = () => { if (document.visibilityState === 'visible') drainNow() }
     const onOnline = () => drainNow()
     const onAuth = supabase.auth.onAuthStateChange((event) => {

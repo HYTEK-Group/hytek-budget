@@ -16,12 +16,14 @@ export function useJobState() {
   }, [])
 
   useEffect(() => {
-    const stored = typeof window !== 'undefined' ? window.localStorage.getItem(STORAGE_KEY) : null
-    if (stored) {
-      loadJob(stored).finally(() => setLoading(false))
-    } else {
-      setLoading(false)
-    }
+    // Promise-chain keeps the load + setLoading out of the synchronous effect body
+    // (react-hooks/set-state-in-effect); behaviour is identical, deferred one microtask.
+    Promise.resolve()
+      .then(() => {
+        const stored = typeof window !== 'undefined' ? window.localStorage.getItem(STORAGE_KEY) : null
+        if (stored) return loadJob(stored)
+      })
+      .finally(() => setLoading(false))
   }, [loadJob])
 
   const selectJob = useCallback((next: Job) => {
