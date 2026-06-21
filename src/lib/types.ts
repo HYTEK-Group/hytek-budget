@@ -17,7 +17,11 @@ export interface Job {
   job_number: string
   name: string
   client: string | null
-  job_type: 'single_building' | 'multi_unit'
+  // Building shape moved off the shared `job_type` column (now owned by
+  // purchasing: 'customer' | 'internal') into its own `building_type` column.
+  // Nullable + null-safe: existing rows may not have it set. See
+  // sql/16-jobs-job-type.sql (neutralized) for the full rationale.
+  building_type: 'single_building' | 'multi_unit' | null
   status: string | null
   install_status: 'setup' | 'active' | 'complete' | null
   detailing_status: 'setup' | 'active' | 'complete' | null
