@@ -31,10 +31,10 @@ export default function LoginPage() {
     <div className="flex flex-1 items-center justify-center p-6">
       <form
         onSubmit={onSubmit}
-        className="w-full max-w-sm space-y-4 rounded-2xl bg-white p-6 shadow-lg"
+        className="w-full max-w-sm space-y-4 rounded-2xl bg-card p-6 shadow-lg"
       >
-        <h1 className="text-2xl font-bold text-hytek-black">HYTEK Budget</h1>
-        <p className="text-sm text-gray-500">Sign in with your HYTEK account.</p>
+        <h1 className="text-2xl font-bold text-foreground">HYTEK Budget</h1>
+        <p className="text-sm text-muted-foreground">Sign in with your HYTEK account.</p>
 
         <label className="block">
           <span className="mb-1 block text-sm font-medium">Email</span>
