@@ -99,5 +99,5 @@ Must show `No drift detected`. NEVER run `--fix` without Scott's approval.
 - Never bypass the SQL migration audit (`check-job-lifecycle.js`)
 
 ## Accounts
-- Admin: `admin@hytekframing.com.au` / `Hytek2026`
+- Admin: sign in with your own named login (the shared admin@hytekframing.com.au was removed everywhere on 14/09/2026)
 - Test jobs: Test 30 Unit Full-Coverage Complex, Test 25 Unit Complex, Test Hospital, Test House
