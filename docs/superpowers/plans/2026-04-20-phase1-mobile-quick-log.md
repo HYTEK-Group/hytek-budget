@@ -2273,7 +2273,7 @@ Open `http://localhost:3000` in a real mobile device (or Chrome DevTools device 
 
 - [ ] **Step 2: Happy path**
 
-1. Sign in as `admin@hytekframing.com.au` / `Hytek2026`.
+1. Sign in as `admin@hytekframing.com.au` (login removed 14/09/2026).
 2. Dashboard → tap "Log a claim" → redirects to `/log/pick-job` (no sticky job yet).
 3. Pick a test job (e.g. "Test 30 Unit Full-Coverage Complex") → lands on `/log`.
 4. Tap an item in Recents (if none, tap any item in the list) → ClaimInput appears with the numeric keypad.
