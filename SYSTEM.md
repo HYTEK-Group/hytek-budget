@@ -1,12 +1,12 @@
 ---
 app: hytek-budget
 url: https://budget.hytekframing.com.au  # every path 307-redirects to https://hytek-install.vercel.app/dashboard (next.config.ts), checked 17/09/2026
-status: side-tool                    # Scott, 17/09/2026 (decision 16) — not archived; NOT part of the live business system. Mothballed 22/04/2026 (tag mothballed-2026-04-22)
+status: side-tool                    # Scott, 17/09/2026 (side-tool decision) — not archived; NOT part of the live business system. Mothballed 22/04/2026 (tag mothballed-2026-04-22)
 live_system: false
 role: none                           # no Postgres role of its own
 unattended: none                     # no cron, no vercel.json, no scheduled task — and the deployed site serves nothing but the redirect
 shared_tables_owned: []              # it owns none; the dormant code below WOULD write four SHARED tables that hytek-install owns
-credential_names: [NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY]   # FINDING: names on the Vercel project (values not read). The service-role name is for SHARED and no code reads it
+credential_names: [NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY]   # FINDING: names on the Vercel project (values not read). No code reads the service-role name; which project it points at was not read (CLAUDE.md says SHARED)
 supabase:
   project_refs: []                   # no literal ref in code; the URL comes from NEXT_PUBLIC_SUPABASE_URL (SHARED, gqtikzguvhukpujyxkez, per CLAUDE.md)
   env:
@@ -62,7 +62,8 @@ Nobody directly. Anyone with an old bookmark lands on hytek-install.
 - **Credentials (finding).** The Vercel project still carries
   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and
   `SUPABASE_SERVICE_ROLE_KEY`, set 150 days before 17/09/2026. No code reads the
-  service-role one. Whether that value still works after the 15/09/2026 key swap
+  service-role one. Which project that key belongs to was not read either; that
+  it is SHARED comes from the repo's CLAUDE.md. Whether that value still works after the 15/09/2026 key swap
   was not tested (values were not read). Removing it is a credential change for
   Scott or the orchestrator, not this passport.
 - **SQL.** `sql/` holds historical scripts for SHARED install tables, pasted
